@@ -1,1 +1,28 @@
-PLOP
+<app-header></app-header>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCUkOxB_BWorkSA_dyi228Ybk7gcnkxzvU",
+    authDomain: "booksin-1408c.firebaseapp.com",
+    databaseURL: "https://booksin-1408c.firebaseio.com",
+    projectId: "booksin-1408c",
+    storageBucket: "booksin-1408c.appspot.com",
+    messagingSenderId: "621087467135",
+    appId: "1:621087467135:web:ced2d218d455b5a63bc14a",
+    measurementId: "G-WVD6DPQGG4"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
