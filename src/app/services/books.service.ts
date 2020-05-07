@@ -44,6 +44,60 @@ export class BooksService {
     );
   }
 
+  createNewBook(newBook: Book) {
+    this.books.push(newBook);
+    this.saveBook();
+    this.emitBooks();
+  }
+
+  removeBook(book: Book) {
+    if(book.photo) {
+      const storageRef = firebase.storage().refFromURL(book.photo);
+      storageRef.delete().then(
+        () => {
+          console.log('Photo removed !');
+        },
+        (error) => {
+          console.log('Could not remove photo ! :' + error);
+        }
+      );
+    }
+
+    const bookIndexToRemove = this.books.findIndex(
+      (bookE1) => {
+        if(bookE1 === book) {
+          return true;
+        }
+      }
+    );
+
+    this.books.splice(bookIndexToRemove, 1);
+    this.saveBook();
+    this.emitBooks();
+  }
+
+  uploadFile(file: File) {
+    return new Promise(
+      (resolve, reject) => {
+        const almostUniqueFileName = Date.now().toString();
+        const upload = firebase.storage().ref()
+          .child('images/' + almostUniqueFileName + file.name).put(file);
+        upload.on(firebase.storage.TaskEvent.STATE_CHANGED,
+          () => {
+            console.log('Loading…');
+          },
+          (error) => {
+            console.log('Loading error ! : ' + error);
+            reject();
+          },
+          () => {
+            resolve(upload.snapshot.ref.getDownloadURL());
+          }
+        );
+      }
+    );
+}
+
   constructor() {
     this.getBooks();
    }
